@@ -43,12 +43,18 @@ public class Student implements User{
      */
     @Override
     public final UserInfo getUserInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserInfo info = new UserInfo();
+        info.copyInfo(m_StudentInfo);
+        return (info);
     }
 
+    /**
+     * Modifies user information
+     * @param _userInfo [in] information to copy
+     */
     @Override
     public final void setUserInfo(UserInfo _userInfo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m_StudentInfo.copyInfo(_userInfo);
     }
 
     

@@ -9,7 +9,7 @@ import templeinfostorage.acc.properties.UserInfo;
 
 /**
  *
- * @author tonyl
+ * @author Antony Lulciuc
  */
 public interface User {
     
@@ -29,7 +29,7 @@ public interface User {
    
     /**
      * Modifies user information
-     * @param _userInfo 
+     * @param _userInfo [information to copy
      */
     void setUserInfo(UserInfo _userInfo);
 }
