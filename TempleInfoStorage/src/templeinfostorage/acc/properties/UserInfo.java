@@ -28,7 +28,18 @@ public class UserInfo implements Info{
      */
     @Override
     public boolean copyInfo(Info _info){
-        // TODO : add logic for coping user information
+        if (_info != null && _info instanceof UserInfo){
+            final UserInfo info = (UserInfo)_info;
+            
+            this.m_strFirstName   = info.m_strFirstName;
+            this.m_strLastName    = info.m_strLastName;
+            this.m_strMiddleName  = info.m_strMiddleName;
+            this.m_strMajor       = info.m_strMajor;    
+            this.m_strPhoneNumber = info.m_strPhoneNumber;
+            this.m_strTUID        = info.m_strPhoneNumber;       
+            this.m_iStatus        = info.m_iStatus;
+            return (true);
+        }
         return (false);
     }
     
@@ -74,6 +85,14 @@ public class UserInfo implements Info{
      */
     public String getMajor(){
         return (m_strMajor);
+    }
+    
+    /**
+     * Phone number
+     * @return string, represents users phone number
+     */
+    public String getPhoneNumber(){
+        return (m_strPhoneNumber);
     }
     
     /**
@@ -126,6 +145,14 @@ public class UserInfo implements Info{
      */
     public void setMajor(String _strMajor){
         m_strMajor = _strMajor;
+    }
+    
+    /**
+     * Phone number
+     * @param _strPhoneNumber [in] users phone number
+     */
+    public void setPhoneNumber(String _strPhoneNumber){
+        m_strPhoneNumber = _strPhoneNumber;
     }
     
     /**
