@@ -18,11 +18,7 @@ public class UserInfo implements Info{
     private String m_strPhoneNumber;
     private String m_strTUID;
     private String m_strMajor;
-    private int    m_bStatus;
-    
-    /**
-     * Getter Methods
-     */
+    private int    m_iStatus;
     
     /**
      * If the argument passed is compatible with the caller,
@@ -34,6 +30,58 @@ public class UserInfo implements Info{
     public boolean copyInfo(Info _info){
         // TODO : add logic for coping user information
         return (false);
+    }
+    
+    /**
+     * Getter Methods
+     */
+    
+    /**
+     * First name
+     * @return string, represents users first name
+     */
+    public String getFirstName(){
+        return (m_strFirstName);
+    }
+    
+    /**
+     * Last name
+     * @return string, represents users last name
+     */
+    public String getLastName(){
+        return (m_strLastName);
+    }
+     
+    /**
+     * Middle name
+     * @return string, represents users middle name
+     */
+    public String getMiddleName(){
+        return (m_strMiddleName);
+    }
+    
+    /**
+     * Temple user ID
+     * @return string, represents users TUID
+     */
+    public String getTUID(){
+        return (m_strTUID);
+    }
+    
+    /**
+     * Major
+     * @return string, represents users makor
+     */
+    public String getMajor(){
+        return (m_strMajor);
+    }
+    
+    /**
+     * Status
+     * @return integer, represents user status in university,
+     */
+    public int getStatus(){
+        return (m_iStatus);
     }
     
     /**
