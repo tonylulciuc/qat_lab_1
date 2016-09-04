@@ -5,17 +5,19 @@
  */
 package templeinfostorage;
 
+import templeinfostorage.ui.TempleUI;
 /**
  *
  * @author tonyl
  */
 public class TempleInfoStorage {
-
+    private static TempleUI m_TempleUI;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        m_TempleUI = new TempleUI();
+        m_TempleUI.start(null);
     }
     
 }
