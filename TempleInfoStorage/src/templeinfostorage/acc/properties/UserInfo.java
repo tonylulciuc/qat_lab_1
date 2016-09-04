@@ -70,7 +70,7 @@ public class UserInfo implements Info{
     
     /**
      * Major
-     * @return string, represents users makor
+     * @return string, represents users major
      */
     public String getMajor(){
         return (m_strMajor);
@@ -87,5 +87,53 @@ public class UserInfo implements Info{
     /**
      * Setter Methods
      */
+    
+    /**
+     * First Name
+     * @param _strFirstName [in] users first name
+     */
+    public void setFirstName(String _strFirstName){
+        m_strFirstName = _strFirstName;
+    }
+    
+    /**
+     * Last Name
+     * @param _strLastName [in] users last name
+     */
+    public void setLastName(String _strLastName){
+        m_strLastName = _strLastName;
+    }
+    
+    /**
+     * Middle Name 
+     * @param _strMiddleName [in] users middle name
+     */
+    public void setMiddleName(String _strMiddleName){
+        m_strMiddleName = _strMiddleName;
+    }
+    
+    /**
+     * Temple ID
+     * @param _strTUID [in] users temple university ID
+     */
+    public void setTUID(String _strTUID){
+        m_strTUID = _strTUID;
+    }
+    
+    /**
+     * Major
+     * @param _strMajor [in] users major
+     */
+    public void setMajor(String _strMajor){
+        m_strMajor = _strMajor;
+    }
+    
+    /**
+     * Status
+     * @param _iStatus [in] users status
+     */
+    public void setStatus(int _iStatus){
+        m_iStatus = _iStatus;
+    }
     
 }
