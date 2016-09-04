@@ -57,5 +57,23 @@ public class Student implements User{
         m_StudentInfo.copyInfo(_userInfo);
     }
 
+    /**
+     * I/O
+     */
     
+    /**
+     * 
+     * @param _strPath
+     * @param _strFileName
+     * @return 
+     */
+    @Override
+    public boolean save(String _strPath, String _strFileName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean load(String _strPath, String _strFileName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

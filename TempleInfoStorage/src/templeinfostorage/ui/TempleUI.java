@@ -5,12 +5,17 @@
  */
 package templeinfostorage.ui;
 
+import templeinfostorage.acc.*;
+import templeinfostorage.acc.properties.*;
+
 /**
  *
  * @author tonyl
  */
 public class TempleUI extends javax.swing.JFrame {
-
+    private User m_User;
+    private UserInfo m_UserInfo;
+    
     /**
      * Creates new form TempleUI
      */
@@ -407,7 +412,7 @@ public class TempleUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void start(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -433,6 +438,7 @@ public class TempleUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new TempleUI().setVisible(true);
             }

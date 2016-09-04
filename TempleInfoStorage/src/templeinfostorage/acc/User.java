@@ -32,4 +32,24 @@ public interface User {
      * @param _userInfo [information to copy
      */
     void setUserInfo(UserInfo _userInfo);
+    
+    /**
+     * I/O
+     */
+    
+    /**
+     * 
+     * @param _strPath
+     * @param _strFileName
+     * @return 
+     */
+    boolean save(String _strPath, String _strFileName);
+    
+    /**
+     * 
+     * @param _strPath
+     * @param _strFileName
+     * @return 
+     */
+    boolean load(String _strPath, String _strFileName);
 }
