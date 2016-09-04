@@ -54,6 +54,22 @@ public class InfoTest {
     @Test
     public void shouldCopyUsersInformation(){
         assertTrue("[failed to copy user information!]", m_InfoOne.copyInfo(m_InfoTwo));
-        assertFalse("[copied data when it should not have don so.]", m_InfoOne.copyInfo(null));
+    }
+    
+    /**
+     * Tests copy mechanism
+     */
+    @Test
+    public void shouldNotCopyInfo(){
+        Info notUserInfo;
+        
+        notUserInfo = new Info(){
+                    @Override
+                    public boolean copyInfo(Info _info){
+                        return (false);
+                    }};
+        
+        assertFalse("[copied null when it should not have done so.]", m_InfoOne.copyInfo(null));
+        assertFalse("[copied notUserInfo when it should not have done so.]", m_InfoOne.copyInfo(notUserInfo));
     }
 }
