@@ -18,8 +18,8 @@ public interface User {
      */
     
     /**
-     * Returns a non-mutable instance of user information
-     * @return 
+     * Returns a instance of user information
+     * @return user information
      */
     UserInfo getUserInfo();
     
