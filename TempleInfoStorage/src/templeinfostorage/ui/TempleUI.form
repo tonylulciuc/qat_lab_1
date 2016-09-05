@@ -109,13 +109,16 @@
                   </Group>
                   <Component id="seperator" min="-2" pref="24" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblSelectMajor" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                          <Component id="btnReadyNotification" min="-2" pref="80" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnSave" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="btnReadyNotification" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNotReadyNotification" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnSave" min="-2" pref="159" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
@@ -173,9 +176,13 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="288" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnReadyNotification" min="-2" pref="71" max="-2" attributes="0"/>
-                              <Component id="btnSave" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="btnNotReadyNotification" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnReadyNotification" min="-2" pref="35" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btnSave" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
@@ -268,7 +275,7 @@
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="txtLastName"/>
           </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnReadyNotification">
+        <Component class="javax.swing.JButton" name="btnNotReadyNotification">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="28" green="32" red="be" type="rgb"/>
@@ -635,6 +642,13 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnReadyNotification">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="28" green="32" red="be" type="rgb"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
