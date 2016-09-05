@@ -15,6 +15,7 @@ import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.text.Document;
 import templeinfostorage.acc.*;
 import templeinfostorage.acc.properties.*;
 import templeinfostorage.validate.Validate;
@@ -31,7 +32,9 @@ public class TempleUI extends javax.swing.JFrame {
     private ImageIcon m_icNotificationIncomplete;
     private ImageIcon m_icNotificationComplete;
     private boolean   m_bComplete = false;
-    
+    private Thread m_StatusThread;
+    private int m_iState;
+    private Object[] m_oEmptyText = new Object[9];
     /**
      * Creates new form TempleUI
      */
@@ -39,6 +42,7 @@ public class TempleUI extends javax.swing.JFrame {
         initComponents();
         initDesign();
         initMajorList();
+        initStatusThread();
     }
     
     /**
@@ -57,6 +61,8 @@ public class TempleUI extends javax.swing.JFrame {
         
         
         // DESIGN 
+        
+        m_iState = 0;
         
         // NOTIFICATION ICON
         btnReadyNotification.setIcon(m_icNotificationIncomplete);
@@ -110,6 +116,73 @@ public class TempleUI extends javax.swing.JFrame {
         }
     }
     
+    private void initStatusThread(){
+        Runnable work = new Runnable() {
+            @Override
+            public void run(){
+                boolean bReady = true;
+                try{
+                    while (true){
+                        bReady = true;
+                        
+                        // CHECK TEXTFIELDS 
+                        for (Object empty : m_oEmptyText){
+                            if (empty == null){
+                                bReady = false;
+                                break;
+                            }
+                        }
+                        
+                        // CHECK RADIO BUTTONS
+                        if (bReady && !(rdGrad.isSelected() || rdUngrad.isSelected())){
+                            m_bComplete = false;
+                            bReady = false;
+                        }
+                        
+                        // CHECK SELECTION LIST
+                        if (bReady && lstMajors.isSelectionEmpty()){
+                            m_bComplete = false;
+                            bReady = false;
+                        }
+                        if (bReady){
+                            m_bComplete = true;
+                            
+                            if (m_iState != 1){
+                                btnReadyNotification.setIcon(m_icNotificationComplete);
+                                m_iState = 1;
+                            }
+                        }else{
+                            m_bComplete = false;
+                            
+                            if (m_iState != 0){
+                                btnReadyNotification.setIcon(m_icNotificationIncomplete);
+                                m_iState = 0;
+                            }
+                        }
+                        
+                        Thread.sleep(10);
+                    }
+                }catch (Exception err){
+                    // DO NOTHING
+                }
+            }
+        };
+        
+        // ADD EVEMT LISTENERS
+        txtFirstName.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 0}));
+        txtLastName.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 1}));
+        txtBDMonth.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 2}));
+        txtBDDay.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 3}));
+        txtBDYear.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 4}));
+        txtEGYear.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 5}));
+        txtPhoneNumber.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 6}));
+        txtTUID.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 7}));
+        txtEmail.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 8}));
+        
+        m_StatusThread = new Thread(work);
+        m_StatusThread.start();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,7 +197,7 @@ public class TempleUI extends javax.swing.JFrame {
         txtLastName = new javax.swing.JTextField();
         btnReadyNotification = new javax.swing.JButton();
         lblFMLName = new javax.swing.JLabel();
-        txtFirstName1 = new javax.swing.JTextField();
+        txtFirstName = new javax.swing.JTextField();
         txtMiddleName = new javax.swing.JTextField();
         lblBirthDate = new javax.swing.JLabel();
         txtBDMonth = new javax.swing.JTextField();
@@ -140,7 +213,7 @@ public class TempleUI extends javax.swing.JFrame {
         lblTUID = new javax.swing.JLabel();
         txtTUID = new javax.swing.JTextField();
         lblFMLName9 = new javax.swing.JLabel();
-        txtFirstName10 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstMajors = new javax.swing.JList<>();
         rdGrad = new javax.swing.JRadioButton();
@@ -173,9 +246,9 @@ public class TempleUI extends javax.swing.JFrame {
         lblFMLName.setForeground(new java.awt.Color(255, 255, 255));
         lblFMLName.setText("First, Middle, and Last Name:");
 
-        txtFirstName1.setBackground(new java.awt.Color(200, 200, 200));
-        txtFirstName1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtFirstName1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtFirstName.setBackground(new java.awt.Color(200, 200, 200));
+        txtFirstName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtFirstName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
 
         txtMiddleName.setBackground(new java.awt.Color(200, 200, 200));
         txtMiddleName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -237,9 +310,9 @@ public class TempleUI extends javax.swing.JFrame {
         lblFMLName9.setForeground(new java.awt.Color(255, 255, 255));
         lblFMLName9.setText("Temple Email:");
 
-        txtFirstName10.setBackground(new java.awt.Color(200, 200, 200));
-        txtFirstName10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        txtFirstName10.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtEmail.setBackground(new java.awt.Color(200, 200, 200));
+        txtEmail.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtEmail.setSelectedTextColor(new java.awt.Color(0, 0, 0));
 
         jScrollPane2.setViewportView(lstMajors);
 
@@ -291,38 +364,40 @@ public class TempleUI extends javax.swing.JFrame {
                             .addComponent(lblFMLName9)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTUID, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFirstName10, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                                    .addComponent(txtTUID)
+                                    .addComponent(txtEmail)))
                             .addComponent(lblGradUndergrad)
                             .addComponent(lblBirthDate)
                             .addComponent(lblExpectedGraduation))
-                        .addGap(28, 28, 28))
+                        .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(rdGrad)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(rdUngrad))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblComma, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(txtEGYear, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtBDMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(155, 155, 155)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(rdGrad)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(rdUngrad))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtBDMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblDash1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtBDDay, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblDash2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtBDYear, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(159, 159, 159)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDash1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBDDay, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDash2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBDYear, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblComma, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(txtEGYear, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)))
                 .addComponent(seperator, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -350,7 +425,7 @@ public class TempleUI extends javax.swing.JFrame {
                             .addComponent(lblFMLName)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(txtFirstName1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtMiddleName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -369,7 +444,7 @@ public class TempleUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtMiddleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtFirstName1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -416,7 +491,7 @@ public class TempleUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblFMLName9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFirstName10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblGradUndergrad)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -431,7 +506,7 @@ public class TempleUI extends javax.swing.JFrame {
 
         txtLastName.getAccessibleContext().setAccessibleName("txtLastName");
         lblFMLName.getAccessibleContext().setAccessibleName("lblFMLName");
-        txtFirstName1.getAccessibleContext().setAccessibleName("txtFirstName");
+        txtFirstName.getAccessibleContext().setAccessibleName("txtFirstName");
         txtMiddleName.getAccessibleContext().setAccessibleName("txtMiddleName");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -515,8 +590,8 @@ public class TempleUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtBDMonth;
     private javax.swing.JTextField txtBDYear;
     private javax.swing.JTextField txtEGYear;
-    private javax.swing.JTextField txtFirstName1;
-    private javax.swing.JTextField txtFirstName10;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtMiddleName;
     private javax.swing.JTextField txtPhoneNumber;

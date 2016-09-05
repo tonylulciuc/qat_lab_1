@@ -60,45 +60,48 @@
                               <Component id="lblFMLName9" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtPhoneNumber" min="-2" pref="249" max="-2" attributes="0"/>
-                                      <Component id="txtTUID" min="-2" pref="249" max="-2" attributes="0"/>
-                                      <Component id="txtFirstName10" min="-2" pref="249" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtPhoneNumber" pref="259" max="32767" attributes="0"/>
+                                      <Component id="txtTUID" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="lblGradUndergrad" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="lblBirthDate" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="lblExpectedGraduation" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="rdGrad" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="rdUngrad" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jComboBox1" min="-2" pref="114" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblComma" min="-2" pref="15" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                      <Component id="txtEGYear" min="-2" pref="68" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="rdGrad" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="rdUngrad" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="txtBDMonth" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lblDash1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtBDDay" min="-2" pref="41" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lblDash2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtBDYear" min="-2" pref="68" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="txtBDMonth" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
+                                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblDash1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtBDDay" min="-2" pref="41" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblDash2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtBDYear" min="-2" pref="68" max="-2" attributes="0"/>
+                                  <Component id="lblComma" min="-2" pref="15" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                  <Component id="txtEGYear" min="-2" pref="68" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -135,7 +138,7 @@
                               <Component id="lblFMLName" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Component id="txtFirstName1" min="-2" pref="201" max="-2" attributes="0"/>
+                                  <Component id="txtFirstName" min="-2" pref="201" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtMiddleName" min="-2" pref="164" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -161,7 +164,7 @@
                           <Component id="txtLastName" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtMiddleName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txtFirstName1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtFirstName" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
@@ -214,7 +217,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="lblFMLName9" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtFirstName10" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="lblGradUndergrad" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -286,7 +289,7 @@
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblFMLName"/>
           </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtFirstName1">
+        <Component class="javax.swing.JTextField" name="txtFirstName">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="c8" green="c8" red="c8" type="rgb"/>
@@ -484,7 +487,7 @@
             <Property name="text" type="java.lang.String" value="Temple Email:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtFirstName10">
+        <Component class="javax.swing.JTextField" name="txtEmail">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="c8" green="c8" red="c8" type="rgb"/>
