@@ -12,7 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import templeinfostorage.acc.*;
 import templeinfostorage.acc.properties.*;
-import templeinfostorage.secure.*;
+import templeinfostorage.validate.Validate;
 
 /**
  *
@@ -21,8 +21,8 @@ import templeinfostorage.secure.*;
 public class TempleUI extends javax.swing.JFrame {
     private User m_User;
     private UserInfo m_UserInfo;
-    private Secure m_Number;
-    private Secure m_Name;
+    private Validate m_Number;
+    private Validate m_Name;
     private ImageIcon m_icNotificationIncomplete;
     private ImageIcon m_icNotificationComplete;
     private boolean   m_bComplete = false;
@@ -37,8 +37,17 @@ public class TempleUI extends javax.swing.JFrame {
     
     private void initDesign(){
         String res = System.getProperty("user.dir") + "\\src\\res\\";
+        
+        // IMAGES
         m_icNotificationIncomplete = new ImageIcon(res + "icon_incomplete.png");
         m_icNotificationComplete   = new ImageIcon(res + "icon_complete.png");
+        
+        // LOGIC 
+        m_User     = new Student();
+        m_UserInfo = new UserInfo();
+        
+        
+        // DESIGN 
         
         // NOTIFICATION ICON
         btnReadyNotification.setIcon(m_icNotificationIncomplete);

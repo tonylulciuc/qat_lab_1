@@ -12,12 +12,12 @@ package templeinfostorage.validate;
  */
 public class NumberAsString implements Validate {
     /**
-     * Determines if said data matches 
- signature in Validate Object
+     * Determines if said data matches signature in Validate Object
      * @param _object [in] data to validate
      * @return integer, result of validation process
      * @throws Exception 
      */
+    @Override
     public int validate(Object _object)throws Exception{
         // TODO : ensure object reoresents  number
         return (0);

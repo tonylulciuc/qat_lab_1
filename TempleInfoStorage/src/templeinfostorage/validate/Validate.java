@@ -12,8 +12,7 @@ package templeinfostorage.validate;
 public interface Validate {
     
     /**
-     * Determines if said data matches 
- signature in Validate Object
+     * Determines if said data matches signature in Validate Object
      * @param _object [in] data to validate
      * @return integer, result of validation process
      * @throws Exception 

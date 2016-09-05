@@ -10,6 +10,16 @@ package templeinfostorage.validate;
  *
  * @author Antony Lulciuc
  */
-public class NameAsString {
-
+public class NameAsString implements Validate{
+/**
+     * Determines if said data matches signature in Validate Object
+     * @param _object [in] data to validate
+     * @return integer, result of validation process
+     * @throws Exception 
+     */
+    @Override
+    public int validate(Object _object)throws Exception{
+        
+        return (0);
+    }
 }
