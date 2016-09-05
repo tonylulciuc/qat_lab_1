@@ -5,8 +5,14 @@
  */
 package templeinfostorage.ui;
 
+import java.awt.Color;
+import javafx.scene.layout.Border;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import templeinfostorage.acc.*;
 import templeinfostorage.acc.properties.*;
+import templeinfostorage.secure.*;
 
 /**
  *
@@ -15,14 +21,42 @@ import templeinfostorage.acc.properties.*;
 public class TempleUI extends javax.swing.JFrame {
     private User m_User;
     private UserInfo m_UserInfo;
+    private Secure m_Number;
+    private Secure m_Name;
+    private ImageIcon m_icNotificationIncomplete;
+    private ImageIcon m_icNotificationComplete;
+    private boolean   m_bComplete = false;
     
     /**
      * Creates new form TempleUI
      */
     public TempleUI() {
         initComponents();
+        initDesign();
     }
-
+    
+    private void initDesign(){
+        String res = System.getProperty("user.dir") + "\\src\\res\\";
+        m_icNotificationIncomplete = new ImageIcon(res + "icon_incomplete.png");
+        m_icNotificationComplete   = new ImageIcon(res + "icon_complete.png");
+        
+        // NOTIFICATION ICON
+        btnReadyNotification.setIcon(m_icNotificationIncomplete);
+        btnReadyNotification.setBackground(new Color(190,50,40));
+        btnReadyNotification.setBorder(BorderFactory.createEmptyBorder());
+        btnReadyNotification.setBorderPainted(false); 
+        btnReadyNotification.setContentAreaFilled(false); 
+        btnReadyNotification.setFocusPainted(false); 
+        btnReadyNotification.setOpaque(false);
+        
+        // SAVE BUTTON
+        btnSave.setBackground(new Color(190,50,40));
+        btnSave.setBorder(BorderFactory.createEmptyBorder());
+        btnSave.setBorderPainted(false);
+        btnSave.setFocusPainted(false); 
+        btnSave.setOpaque(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,8 +68,6 @@ public class TempleUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        btnSave = new javax.swing.JButton();
         txtLastName = new javax.swing.JTextField();
         btnReadyNotification = new javax.swing.JButton();
         lblFMLName = new javax.swing.JLabel();
@@ -67,6 +99,7 @@ public class TempleUI extends javax.swing.JFrame {
         lblSelectMajor = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 28), new java.awt.Dimension(0, 28), new java.awt.Dimension(32767, 28));
         seperator = new javax.swing.JSeparator();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(40, 40, 40));
@@ -79,22 +112,12 @@ public class TempleUI extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("  LOCAL TEMPLE INFORMATION STORAGE ");
 
-        btnSave.setBackground(new java.awt.Color(90, 50, 40));
-        btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnSave.setForeground(new java.awt.Color(255, 255, 255));
-        btnSave.setText("Save");
-        btnSave.setEnabled(false);
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(btnSave);
-
         txtLastName.setBackground(new java.awt.Color(200, 200, 200));
         txtLastName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtLastName.setCaretColor(new java.awt.Color(255, 255, 255));
         txtLastName.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+
+        btnReadyNotification.setBackground(new java.awt.Color(190, 50, 40));
 
         lblFMLName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblFMLName.setForeground(new java.awt.Color(255, 255, 255));
@@ -223,6 +246,11 @@ public class TempleUI extends javax.swing.JFrame {
 
         seperator.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        btnSave.setBackground(new java.awt.Color(190, 50, 40));
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
+        btnSave.setText("Save");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -277,17 +305,17 @@ public class TempleUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(seperator, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblSelectMajor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(btnReadyNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReadyNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -328,9 +356,9 @@ public class TempleUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReadyNotification, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnReadyNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -401,10 +429,6 @@ public class TempleUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void rdGradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdGradActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdGradActionPerformed
@@ -451,7 +475,6 @@ public class TempleUI extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBirthDate;
     private javax.swing.JLabel lblDash1;
