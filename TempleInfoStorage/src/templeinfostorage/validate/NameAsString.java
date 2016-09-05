@@ -18,8 +18,8 @@ public class NameAsString implements Validate{
      * @throws Exception 
      */
     @Override
-    public int validate(Object _object)throws Exception{
+    public boolean validate(Object _object){
         
-        return (0);
+        return (false);
     }
 }

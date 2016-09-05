@@ -18,8 +18,8 @@ public class NumberAsString implements Validate {
      * @throws Exception 
      */
     @Override
-    public int validate(Object _object)throws Exception{
+    public boolean validate(Object _object){
         // TODO : ensure object reoresents  number
-        return (0);
+        return (false);
     }
 }

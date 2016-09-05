@@ -17,5 +17,5 @@ public interface Validate {
      * @return integer, result of validation process
      * @throws Exception 
      */
-    int validate(Object _object)throws Exception;
+    boolean validate(Object _object);
 }
