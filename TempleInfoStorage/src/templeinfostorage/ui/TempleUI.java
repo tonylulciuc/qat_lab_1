@@ -5,6 +5,10 @@
  */
 package templeinfostorage.ui;
 
+import templeinfostorage.base.validate.Validate;
+import templeinfostorage.base.validate.NameAsString;
+import templeinfostorage.base.validate.EmailAsString;
+import templeinfostorage.base.validate.NumberAsString;
 import java.awt.Color;
 import java.io.File;
 import java.util.LinkedList;
@@ -18,7 +22,8 @@ import javax.swing.ImageIcon;
 import javax.swing.text.Document;
 import templeinfostorage.acc.*;
 import templeinfostorage.acc.properties.*;
-import templeinfostorage.validate.Validate;
+import templeinfostorage.base.ClipedDocument;
+import templeinfostorage.base.instruction.*;
 
 /**
  *
@@ -29,6 +34,7 @@ public class TempleUI extends javax.swing.JFrame {
     private UserInfo m_UserInfo;
     private Validate m_Number;
     private Validate m_Name;
+    private Validate m_Email;
     private ImageIcon m_icRedLightOn;
     private ImageIcon m_icRedLightOff;
     private ImageIcon m_icGreenLightOn;
@@ -36,7 +42,7 @@ public class TempleUI extends javax.swing.JFrame {
     private boolean   m_bComplete = false;
     private Thread m_StatusThread;
     private int m_iState;
-    private Object[] m_oEmptyText = new Object[9];
+    private Object[] m_oTextReady = new Object[9];
     /**
      * Creates new form TempleUI
      */
@@ -62,10 +68,11 @@ public class TempleUI extends javax.swing.JFrame {
         // LOGIC 
         m_User     = new Student();
         m_UserInfo = new UserInfo();
-        
+        m_Number   = new NumberAsString();
+        m_Name     = new NameAsString();
+        m_Email    = new EmailAsString();
         
         // DESIGN 
-        
         m_iState = 0;
         
         // NOTIFICATION ICON
@@ -132,14 +139,15 @@ public class TempleUI extends javax.swing.JFrame {
         Runnable work = new Runnable() {
             @Override
             public void run(){
-                boolean bReady = true;
+                boolean bReady;
+                
                 try{
                     while (true){
                         bReady = true;
                         
                         // CHECK TEXTFIELDS 
-                        for (Object empty : m_oEmptyText){
-                            if (empty == null){
+                        for (Object ready : m_oTextReady){
+                            if (ready == null){
                                 bReady = false;
                                 break;
                             }
@@ -182,16 +190,36 @@ public class TempleUI extends javax.swing.JFrame {
             }
         };
         
+        Instruction change = new ValidateChangeProcess();
+        Instruction limit = new ValidateLimitProcess();
+        Document doc;
         // ADD EVEMT LISTENERS
-        txtFirstName.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 0}));
-        txtLastName.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 1}));
-        txtBDMonth.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 2}));
-        txtBDDay.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 3}));
-        txtBDYear.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 4}));
-        txtEGYear.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 5}));
-        txtPhoneNumber.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 6}));
-        txtTUID.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 7}));
-        txtEmail.getDocument().addDocumentListener(new JTextEmptyListener(new Object[] {m_oEmptyText, 8}));
+        txtFirstName.setDocument(doc = new ClipedDocument(2, -1));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change, new Object[] {m_oTextReady, 0, m_Name, txtFirstName}));
+        
+        txtLastName.setDocument(doc = new ClipedDocument(2, -1));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change, new Object[] {m_oTextReady, 1, m_Name, txtLastName}));
+        
+        txtBDMonth.setDocument(doc = new ClipedDocument(2, 2));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 2, m_Number, txtBDMonth}));
+        
+        txtBDDay.setDocument(doc = new ClipedDocument(1, 2));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 3, m_Number, txtBDDay}));
+        
+        txtBDYear.setDocument(doc = new ClipedDocument(4, 4));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 4, m_Number, txtBDYear}));
+        
+        txtEGYear.setDocument(doc = new ClipedDocument(4, 4));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 5, m_Number, txtEGYear}));
+        
+        txtPhoneNumber.setDocument(doc = new ClipedDocument(10, 10));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 6, m_Number, txtPhoneNumber}));
+        
+        txtTUID.setDocument(doc = new ClipedDocument(9, 9));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 7, m_Number, txtTUID}));
+        
+        txtEmail.setDocument(doc = new ClipedDocument(5, -1));
+        doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 8, m_Email, txtEmail}));
         
         m_StatusThread = new Thread(work);
         m_StatusThread.start();

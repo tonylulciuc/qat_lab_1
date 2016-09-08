@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 
-package templeinfostorage.validate;
+package templeinfostorage.base.validate;
+
+import javax.swing.JTextField;
 
 /**
  *
  * @author Antony Lulciuc
  */
-public class NameAsString implements Validate{
-/**
+public class NumberAsString implements Validate {
+    /**
      * Determines if said data matches signature in Validate Object
      * @param _object [in] data to validate
      * @return integer, result of validation process
@@ -19,7 +21,11 @@ public class NameAsString implements Validate{
      */
     @Override
     public boolean validate(Object _object){
-        
-        return (false);
+        try{
+            Integer.parseInt(((JTextField)_object).getText());
+            return (true);
+        }catch (Exception err){
+            return (false);
+        }
     }
 }

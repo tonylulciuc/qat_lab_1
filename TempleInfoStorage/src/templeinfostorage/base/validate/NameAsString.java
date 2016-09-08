@@ -4,13 +4,22 @@
  * and open the template in the editor.
  */
 
-package templeinfostorage.validate;
+package templeinfostorage.base.validate;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JTextField;
+
+
 
 /**
  *
  * @author Antony Lulciuc
  */
-public class NumberAsString implements Validate {
+public class NameAsString implements Validate{
+   private static final Pattern pattern = Pattern.compile("^[\\p{L}\\s'.-]+$", Pattern.CASE_INSENSITIVE);
+   private Matcher matcher;
+   
     /**
      * Determines if said data matches signature in Validate Object
      * @param _object [in] data to validate
@@ -19,7 +28,9 @@ public class NumberAsString implements Validate {
      */
     @Override
     public boolean validate(Object _object){
-        // TODO : ensure object reoresents  number
-        return (false);
+        JTextField text = (JTextField)_object;
+        String str = text.getText();
+        matcher = pattern.matcher(str);
+        return (matcher.find());
     }
 }
