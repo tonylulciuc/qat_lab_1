@@ -28,8 +28,7 @@ public class NameAsString implements Validate{
      */
     @Override
     public boolean validate(Object _object){
-        JTextField text = (JTextField)_object;
-        String str = text.getText();
+        String str = (String)_object;
         matcher = pattern.matcher(str);
         return (matcher.find());
     }

@@ -6,6 +6,7 @@
 
 package templeinfostorage.base.instruction;
 
+import javax.swing.JTextField;
 import templeinfostorage.base.validate.Validate;
 
 /**
@@ -24,6 +25,7 @@ public class ValidateChangeProcess implements Instruction{
         Object[] res;
         Integer index;
         Validate validate;
+        JTextField text;
         
         if (_data.length != 2)
             throw (new Exception("Error - invalid length of " + 
@@ -33,8 +35,9 @@ public class ValidateChangeProcess implements Instruction{
         res  = (Object[])data[0];
         index = (Integer)data[1];
         validate = (Validate)data[2];
+        text = (JTextField)(data[3]);
         
-        if (validate.validate(data[3])){
+        if (validate.validate(text.getText())){
             res[index] = true;
         }else{
             res[index] = null;

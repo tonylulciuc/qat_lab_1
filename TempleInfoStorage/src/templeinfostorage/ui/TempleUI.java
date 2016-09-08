@@ -11,16 +11,15 @@ import templeinfostorage.base.validate.EmailAsString;
 import templeinfostorage.base.validate.NumberAsString;
 import java.awt.Color;
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
-import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.text.Document;
-import templeinfostorage.acc.*;
 import templeinfostorage.acc.properties.*;
 import templeinfostorage.base.ClipedDocument;
 import templeinfostorage.base.instruction.*;
@@ -30,8 +29,6 @@ import templeinfostorage.base.instruction.*;
  * @author tonyl
  */
 public class TempleUI extends javax.swing.JFrame {
-    private User m_User;
-    private UserInfo m_UserInfo;
     private Validate m_Number;
     private Validate m_Name;
     private Validate m_Email;
@@ -66,8 +63,6 @@ public class TempleUI extends javax.swing.JFrame {
         m_icGreenLightOff = new ImageIcon(res + "icon_green_off.png");
         
         // LOGIC 
-        m_User     = new Student();
-        m_UserInfo = new UserInfo();
         m_Number   = new NumberAsString();
         m_Name     = new NameAsString();
         m_Email    = new EmailAsString();
@@ -265,7 +260,7 @@ public class TempleUI extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 28), new java.awt.Dimension(0, 28), new java.awt.Dimension(32767, 28));
         seperator = new javax.swing.JSeparator();
         btnSave = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbMonth = new javax.swing.JComboBox<>();
         btnReadyNotification = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -363,6 +358,11 @@ public class TempleUI extends javax.swing.JFrame {
         rdGrad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rdGrad.setForeground(new java.awt.Color(255, 255, 255));
         rdGrad.setText("Graduate");
+        rdGrad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdGradMouseClicked(evt);
+            }
+        });
         rdGrad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdGradActionPerformed(evt);
@@ -372,7 +372,18 @@ public class TempleUI extends javax.swing.JFrame {
         rdUngrad.setBackground(new java.awt.Color(190, 50, 40));
         rdUngrad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rdUngrad.setForeground(new java.awt.Color(255, 255, 255));
+        rdUngrad.setSelected(true);
         rdUngrad.setText("Undergraduate");
+        rdUngrad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdUngradMouseClicked(evt);
+            }
+        });
+        rdUngrad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdUngradActionPerformed(evt);
+            }
+        });
 
         lblGradUndergrad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblGradUndergrad.setForeground(new java.awt.Color(255, 255, 255));
@@ -388,10 +399,15 @@ public class TempleUI extends javax.swing.JFrame {
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save");
+        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveMouseClicked(evt);
+            }
+        });
 
-        jComboBox1.setBackground(new java.awt.Color(200, 200, 200));
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        cbMonth.setBackground(new java.awt.Color(200, 200, 200));
+        cbMonth.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
         btnReadyNotification.setBackground(new java.awt.Color(190, 50, 40));
 
@@ -438,7 +454,7 @@ public class TempleUI extends javax.swing.JFrame {
                                         .addComponent(txtBDYear, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(159, 159, 159)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblComma, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
@@ -529,7 +545,7 @@ public class TempleUI extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(lblComma)
                                             .addComponent(txtEGYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblPhoneNumber)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -574,8 +590,56 @@ public class TempleUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rdGradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdGradActionPerformed
-        // TODO add your handling code here:
+        rdUngrad.setSelected(false);
+        rdGrad.setSelected(true);
     }//GEN-LAST:event_rdGradActionPerformed
+
+    private void rdUngradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdUngradActionPerformed
+        // TODO add your handling code here:
+        rdUngrad.setSelected(true);
+        rdGrad.setSelected(false);
+    }//GEN-LAST:event_rdUngradActionPerformed
+
+    private void rdUngradMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdUngradMouseClicked
+            
+        
+    }//GEN-LAST:event_rdUngradMouseClicked
+
+    private void rdGradMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdGradMouseClicked
+
+    }//GEN-LAST:event_rdGradMouseClicked
+
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        if (m_bComplete){
+            PrintWriter writer;
+            String input = txtMiddleName.getText();
+            
+            if (input.length() > 0 && !m_Name.validate(input))
+                JOptionPane.showMessageDialog(null, "Middle name invalid!", "INVALID MIDDLE NAME!", JOptionPane.INFORMATION_MESSAGE);
+            else{
+                try {
+                    writer = new PrintWriter(new File(System.getProperty("user.dir") + "\\src\\res\\temple_info_storage.txt"));
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, err.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (input.length() > 0)
+                    input += " ";
+                
+                writer.println("NAME: " + txtFirstName.getText() + " " + input + txtLastName.getText());
+                writer.println("BIRTH_DATE: " + txtBDMonth.getText() + " " + txtBDDay.getText() + " " + txtBDYear.getText());
+                writer.println("EXPECTED_GRADUATION: " + String.valueOf(cbMonth.getSelectedItem()) + " " + txtEGYear.getText());
+                writer.println("PHONE_NUMBER: " + txtPhoneNumber.getText());
+                writer.println("TUID: " + txtTUID.getText());
+                writer.println("STATUS: " + (rdGrad.isSelected() ? "GRADUATE" : "UNDERGRADUATE"));
+                writer.println("MAJOR: " + lstMajors.getSelectedValue());
+                
+                writer.close();
+                JOptionPane.showMessageDialog(null, "Inforation saved here ", "SAVING", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnSaveMouseClicked
 
     /**
      * @param args the command line arguments
@@ -617,8 +681,8 @@ public class TempleUI extends javax.swing.JFrame {
     private javax.swing.JButton btnNotReadyNotification;
     private javax.swing.JButton btnReadyNotification;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbMonth;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
