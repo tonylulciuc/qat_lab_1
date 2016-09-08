@@ -31,6 +31,7 @@ public class ValidateChangeProcess implements Instruction{
             throw (new Exception("Error - invalid length of " + 
                                  _data.length + " must be 2"));
         
+        // REINTERPRET DATA FOR PROCESSING
         data = (Object[])_data[0];
         res  = (Object[])data[0];
         index = (Integer)data[1];

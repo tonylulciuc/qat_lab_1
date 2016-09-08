@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+import templeinfostorage.base.validate.NameAsString;
+import templeinfostorage.base.validate.Validate;
+import templeinfostorage.base.validate.NumberAsString;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,7 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import templeinfostorage.validate.*;
 
 /**
  *

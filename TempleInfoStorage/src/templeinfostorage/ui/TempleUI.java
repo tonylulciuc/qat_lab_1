@@ -39,7 +39,7 @@ public class TempleUI extends javax.swing.JFrame {
     private boolean   m_bComplete = false;
     private Thread m_StatusThread;
     private int m_iState;
-    private Object[] m_oTextReady = new Object[9];
+    private final Object[] m_oTextReady = new Object[9];
     /**
      * Creates new form TempleUI
      */
@@ -108,11 +108,16 @@ public class TempleUI extends javax.swing.JFrame {
         try{
             sMajor = new Scanner(new File(res + "raw\\majors.txt"));
             
+            // READ MAJORS FROM FILE
             while (sMajor.hasNextLine() && (strMajor = sMajor.nextLine()) != null)
                 lMajor.add(strMajor);
             
             sMajor.close();           
+            
+            // SORT INFORMATION
             lMajor.sort(tree.comparator());
+            
+            // DISPLAY MAJORS
             lstMajors.setModel(new javax.swing.AbstractListModel<String>() {
                 String[] strings = lMajor.toArray(new String[lMajor.size()]);
                 @Override
@@ -131,7 +136,7 @@ public class TempleUI extends javax.swing.JFrame {
     }
     
     private void initStatusThread(){
-        Runnable work = new Runnable() {
+        Runnable statusChecker = new Runnable() {
             @Override
             public void run(){
                 boolean bReady;
@@ -159,9 +164,12 @@ public class TempleUI extends javax.swing.JFrame {
                             m_bComplete = false;
                             bReady = false;
                         }
+                        
+                        // IF INFORMATION IS CORRECT
                         if (bReady){
                             m_bComplete = true;
                             
+                            // IF STATE NOT ALLREADY SET
                             if (m_iState != 1){
                                 btnNotReadyNotification.setIcon(m_icRedLightOff);
                                 btnReadyNotification.setIcon(m_icGreenLightOn);
@@ -170,6 +178,7 @@ public class TempleUI extends javax.swing.JFrame {
                         }else{
                             m_bComplete = false;
                             
+                            // IF STATE NOT ALREADY SET
                             if (m_iState != 0){
                                 btnNotReadyNotification.setIcon(m_icRedLightOn);
                                 btnReadyNotification.setIcon(m_icGreenLightOff);
@@ -185,10 +194,12 @@ public class TempleUI extends javax.swing.JFrame {
             }
         };
         
+        // INITIALIZE COMMON DATA
         Instruction change = new ValidateChangeProcess();
         Instruction limit = new ValidateLimitProcess();
         Document doc;
-        // ADD EVEMT LISTENERS
+        
+        // SET DOCUMENT TO ACCEPT X CHARACTERS AND ADD EVEMT LISTENERS
         txtFirstName.setDocument(doc = new ClipedDocument(2, -1));
         doc.addDocumentListener(new JTextReadyListener(change, change, change, new Object[] {m_oTextReady, 0, m_Name, txtFirstName}));
         
@@ -216,7 +227,7 @@ public class TempleUI extends javax.swing.JFrame {
         txtEmail.setDocument(doc = new ClipedDocument(5, -1));
         doc.addDocumentListener(new JTextReadyListener(change, change, change,new Object[] {m_oTextReady, 8, m_Email, txtEmail}));
         
-        m_StatusThread = new Thread(work);
+        m_StatusThread = new Thread(statusChecker);
         m_StatusThread.start();
     }
     
@@ -614,9 +625,12 @@ public class TempleUI extends javax.swing.JFrame {
             PrintWriter writer;
             String input = txtMiddleName.getText();
             
+            // Validate middle name if user added information
             if (input.length() > 0 && !m_Name.validate(input))
-                JOptionPane.showMessageDialog(null, "Middle name invalid!", "INVALID MIDDLE NAME!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Middle name invalid!", "INVALID MIDDLE NAME!", JOptionPane.WARNING_MESSAGE);
             else{
+                
+                // CREATE FILE
                 try {
                     writer = new PrintWriter(new File(System.getProperty("user.dir") + "\\src\\res\\temple_info_storage.txt"));
                 } catch (Exception err) {
@@ -624,9 +638,11 @@ public class TempleUI extends javax.swing.JFrame {
                     return;
                 }
                 
+                // ENSURE SINGLE SPACE BETWEEN DATA STOED
                 if (input.length() > 0)
                     input += " ";
                 
+                // WRITE
                 writer.println("NAME: " + txtFirstName.getText() + " " + input + txtLastName.getText());
                 writer.println("BIRTH_DATE: " + txtBDMonth.getText() + " " + txtBDDay.getText() + " " + txtBDYear.getText());
                 writer.println("EXPECTED_GRADUATION: " + String.valueOf(cbMonth.getSelectedItem()) + " " + txtEGYear.getText());
@@ -636,8 +652,11 @@ public class TempleUI extends javax.swing.JFrame {
                 writer.println("MAJOR: " + lstMajors.getSelectedValue());
                 
                 writer.close();
-                JOptionPane.showMessageDialog(null, "Inforation saved here ", "SAVING", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Inforation saved here \n" + System.getProperty("user.dir") + "\\\\src\\\\res\\\\temple_info_storage.txt" , "SAVING", JOptionPane.INFORMATION_MESSAGE);
+                
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Data is missing or invalid!", "MISSING OR INVALID!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveMouseClicked
 

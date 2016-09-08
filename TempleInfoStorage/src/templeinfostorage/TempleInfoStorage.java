@@ -7,7 +7,7 @@ package templeinfostorage;
 
 import templeinfostorage.ui.TempleUI;
 /**
- *
+ * Project main
  * @author tonyl
  */
 public class TempleInfoStorage {

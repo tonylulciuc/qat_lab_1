@@ -18,12 +18,24 @@ public class ClipedDocument extends PlainDocument{
     private int m_iMinLength;
     private int m_iMaxLength;
     
+    /**
+     * Constructor
+     * @param _iMinLength pin[ minimum length (inclusive) if -1 no limit
+     * @param _iMaxLength  [in] maximum length (inclusive) if -1 no limit
+     */
     public ClipedDocument(int _iMinLength, int _iMaxLength){
         super();
         m_iMinLength = _iMinLength;
         m_iMaxLength = _iMaxLength;
     }
     
+    /**
+     * Set limit to input size..
+     * @param _off
+     * @param _string
+     * @param _attributeSet
+     * @throws BadLocationException 
+     */
     @Override
     public void insertString(int _off, String _string, AttributeSet _attributeSet)
             throws BadLocationException{
